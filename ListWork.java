@@ -34,7 +34,7 @@ public class ListWork
 				//Remove any non-integer values from the string.
 				inputLine = inputLine.replaceAll("\\D+", " ");
 				
-				//Testing
+				//Testing code.
 				System.out.println("Input is: " + inputLine);
 				
 				//Split the string and put it in an string array.
@@ -49,10 +49,16 @@ public class ListWork
 					//Prevent array out of bounds.
 					if (i < 10)
 					{
+						//Convert the string to an integer and put in array.
 						arr[i] = Integer.parseInt(stringArray[j]);
+						
+						//Testing code.
 						System.out.println("Value at index[" + i + "]:" + arr[i]);
 						i++;
 					}
+					
+					//This fixes the null issue, but maybe we can find a better fix?
+					i--;
 				}
 			}
 			
