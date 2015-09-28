@@ -49,21 +49,12 @@ public class ListWork
 						//Convert the string to an integer and put in array.
 						arr[i] = Integer.parseInt(stringArray[j]);
 						
-<<<<<<< HEAD
 						//Increment counter.
 						i++;
 					}
 					
 					//Decrement the counter to compensate, this fixes the null issue.
 					i--;
-=======
-						//Testing code.
-						System.out.println("Value at index[" + i + "]:" + arr[i]);
-						//The i counter doesnt need to be progressed in this "if" for it is already being progressed
-						//by the "for" loop therefore skiping every other array position.
-							//i++;
-					}
->>>>>>> origin/master
 				}
 			}
 			
