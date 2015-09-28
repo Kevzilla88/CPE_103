@@ -54,11 +54,10 @@ public class ListWork
 						
 						//Testing code.
 						System.out.println("Value at index[" + i + "]:" + arr[i]);
-						i++;
+						//The i counter doesnt need to be progressed in this "if" for it is already being progressed
+						//by the "for" loop therefore skiping every other array position.
+							//i++;
 					}
-					
-					//This fixes the null issue, but maybe we can find a better fix?
-					i--;
 				}
 			}
 			
