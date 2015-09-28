@@ -11,7 +11,7 @@ public class ListWork
 	
 	public static void main(String [ ] args)
 	{
-		//Variable declaration.
+		//Assume the user wants to search at first, but we'll still ask.
 		String searchAnswer = "yes";
 		
 		//Define the array we'll be storing input in.
@@ -25,39 +25,35 @@ public class ListWork
 		{
 			try
 			{
-				//Prompt the user for input.
-				System.out.println("Please enter 10 integers:");
+				//Prompt the user for input
+				System.out.println("Please enter " + (10-i) + "  more integers:");
 				
 				//Take in entire line as string.
 				String inputLine = in.next();
 
 				//Remove any non-integer values from the string.
-				inputLine = inputLine.replaceAll("\\D+", " ");
+				inputLine = inputLine.replaceAll("[^0-9.]+", " ");
 				
-				//Testing code.
-				System.out.println("Input is: " + inputLine);
-				
-				//Split the string and put it in an string array.
+				//Split the string and put it in a string array.
 				String[] stringArray = inputLine.trim().split("\\s+");
 				
-				//Get length of the string array.
+				//Get length of the string array so we know how many integers we need to process.
 				int inputLength = stringArray.length;
 
 				//Copy all integers from string array to integer array.
 				for(int j = 0; j < inputLength; j++)
 				{
-					//Prevent array out of bounds.
+					//Prevent array out of bounds, since we can't have more than 10 elements.
 					if (i < 10)
 					{
 						//Convert the string to an integer and put in array.
 						arr[i] = Integer.parseInt(stringArray[j]);
 						
-						//Testing code.
-						System.out.println("Value at index[" + i + "]:" + arr[i]);
+						//Increment counter.
 						i++;
 					}
 					
-					//This fixes the null issue, but maybe we can find a better fix?
+					//Decrement the counter to compensate, this fixes the null issue.
 					i--;
 				}
 			}
@@ -65,7 +61,8 @@ public class ListWork
 			//Catch any single non-integer inputs.
 			catch (NumberFormatException e) 
 			{
-		        System.out.println("Error: Non-integer. Please enter a valid integer value.\n");	           
+		        System.out.println("Error: Non-integer. Please enter a valid integer value.\n");	
+		        i--;
 		    }
 		}
 		
@@ -79,6 +76,7 @@ public class ListWork
 			//User didn't enter input correctly.
 			while(!searchAnswer.equals("no") && !searchAnswer.equals("yes"))
 			{
+				//Ask for proper input again, ignoring any new line characters.
 				System.out.println("Incorrect input. Please enter 'yes' or 'no'");
 				searchAnswer = in.useDelimiter("\n").next();
 			}
@@ -86,14 +84,18 @@ public class ListWork
 			//User wants to search.
 			if (searchAnswer.equals("yes"))
 			{
+				//Ask for input.
 				System.out.println("What integer would you like to search for?");
 				try
 				{
-					//Call the search method.
+					//Parse our input string so that we just get an Integer. 
 					Integer searchTarget = Integer.parseInt(in.useDelimiter("\n").next());
+					
+					//Call the search method.
 					search(arr, searchTarget);
 				}
 				
+				//If we don't get an integer to parse, catch the error.
 				catch (NumberFormatException e)
 				{
 					System.out.println("Error: Non-integer. Please enter a valid integer target.\n");
@@ -142,7 +144,8 @@ public class ListWork
 		//Loop through the array and print every element.
 		for(T element: arr)
 		{
-		       System.out.println(element);
+			//Print on a new line every time.
+			System.out.println(element);
 		}
 	}
 }
