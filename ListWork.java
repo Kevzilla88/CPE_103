@@ -48,13 +48,7 @@ public class ListWork
 					{
 						//Convert the string to an integer and put in array.
 						arr[i] = Integer.parseInt(stringArray[j]);
-						
-						//Increment counter.
-						i++;
 					}
-					
-					//Decrement the counter to compensate, this fixes the null issue.
-					i--;
 				}
 			}
 			
