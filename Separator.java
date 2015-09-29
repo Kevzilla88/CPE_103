@@ -22,7 +22,7 @@ public class Separator
 		int n = in.nextInt();
 		
 		//Prompt for number input.
-		System.out.println("Please enter " + n + " values (integers & non-integers), and type 'q' to quit: ");
+		System.out.println("Please enter " + n + " values (integers & non-integers), or type 'q' to quit: ");
 		
 		//Create a n-long integer array.
 		int[] intArray = new int[n];
@@ -31,49 +31,122 @@ public class Separator
 		float[] floatArray = new float[n];
 		
 		//Use hasNextInt and hasNextFloat to input numbers to arrays until "aa" or 'q' is entered.
-		for (int i = 0; i < n; i++)
+		for (int i = 0; ((intCount != n) || (floatCount != n)); i++)
 		{
-			//Process integers.
+			//Check if the next value is an int.
 			if (in.hasNextInt())
 			{
-				intArray[intCount] = in.nextInt();
-				intCount++;
+				//Make sure we're not at the limit. If we are, increment intCount so that we'll exit the loop when we find another int.
+				if (intCount == n)
+				{
+					intCount++;
+					in.next();
+				}
+				
+				//We're past the limit, so don't read anymore.
+				if (intCount > n)
+				{
+					intCount = n;
+					floatCount = n;
+				}
+				
+				//Valid int.
+				else
+				{
+					intArray[intCount] = in.nextInt();
+					intCount++;
+					
+					//Testing code.
+					System.out.println("int count");
+				}
 				
 			}
+			
 			//Process floats.
 			else if(in.hasNextFloat())
 			{
-				floatArray[floatCount] = in.nextFloat();
-				floatCount++;
-			}
-			
-			//Process anything that isn't an integer or a float.
-			else
-			{
-				//Handle 'aa' case.
-				if (in.next().equals("aa"))
+				//Make sure we're not at the limit. If we are, increment floatCount so that we'll exit the loop when we find another float.
+				if (floatCount == n)
 				{
-					i = n;
+					floatCount++;
+					in.next();
 				}
 				
-				//Handle 'q' case.
-				if (in.next().equals("q"))
+				//We're past the limit, so don't read anymore.
+				if (floatCount > n)
 				{
-					i = n;
+					intCount = n;
+					floatCount = n;
+				}
+				
+				//Valid float.
+				else
+				{
+					floatArray[floatCount] = in.nextFloat();
+					floatCount++;
+					
+					//Testing code.
+					System.out.println("float count");
 				}
 			}
+			
+			//It's not an integer or a float.
+			else
+			{
+				//Check if aa.
+				if (in.next().equals("aa"))
+				{
+					floatCount = n;
+					intCount = n;
+				}
+				
+				//Check if q.
+				
+				
+				//Must be invalid.
+				else
+				{
+					floatCount = n;
+					intCount = n;
+				}
+			}
+			
+			
+			
 				
 		}
 		
 		//Close the scanner.
 		in.close();
 		
-		//Print out integers.
-		System.out.println("Integers: " + Arrays.toString(intArray));
+		//Convert the integer array to a string.
+		String intString = Arrays.toString(intArray);
+		String floatString = Arrays.toString(floatArray);
 		
-		//Print out floats.
-		System.out.println("Floats: " + Arrays.toString(floatArray));
+		//Remove the commas.
+		intString = intString.replace(",", "");
+		floatString = floatString.replace(",", "");
 		
+		//Remove the left bracket.
+	    intString = intString.replace("[", "");
+	    floatString = floatString.replace("[", "");
+	    
+	    //Remove the right bracket.
+	    intString = intString.replace("]", "");
+	    floatString = floatString.replace("]", "");
+	    
+	    //Remove any zeros left from unoccupied array entries.
+	    intString = intString.replace("0", "");
+	    floatString = floatString.replace("0.0", "");
+	    
+	    //Trim remaining spaces.
+	    intString = intString.trim(); 
+	    floatString = floatString.trim();
+	    
+	    //Print out the integers.
+		System.out.println("Integers: " + intString);
+		
+		//Print out the floats.
+		System.out.println("Floats: " + floatString);
 	}
-
 }
