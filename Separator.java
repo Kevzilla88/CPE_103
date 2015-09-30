@@ -40,7 +40,6 @@ public class Separator
 				if (intCount == n)
 				{
 					intCount++;
-					in.next();
 				}
 				
 				//We're past the limit, so don't read anymore.
@@ -55,11 +54,7 @@ public class Separator
 				{
 					intArray[intCount] = in.nextInt();
 					intCount++;
-					
-					//Testing code.
-					System.out.println("int count");
-				}
-				
+				}	
 			}
 			
 			//Process floats.
@@ -69,7 +64,6 @@ public class Separator
 				if (floatCount == n)
 				{
 					floatCount++;
-					in.next();
 				}
 				
 				//We're past the limit, so don't read anymore.
@@ -84,36 +78,36 @@ public class Separator
 				{
 					floatArray[floatCount] = in.nextFloat();
 					floatCount++;
-					
-					//Testing code.
-					System.out.println("float count");
 				}
 			}
 			
 			//It's not an integer or a float.
 			else
 			{
+				//Take it in as a string so we can analyze.
+				String inString = in.next();
+				
 				//Check if aa.
-				if (in.next().equals("aa"))
+				if (inString.equals("aa"))
 				{
 					floatCount = n;
 					intCount = n;
 				}
 				
 				//Check if q.
+				if (inString.charAt(0) == 'q')
+				{					
+					floatCount = n;
+					intCount = n;
+				}
 				
-				
-				//Must be invalid.
+				//Must be invalid (not "aa" or 'q').
 				else
 				{
 					floatCount = n;
 					intCount = n;
 				}
-			}
-			
-			
-			
-				
+			}		
 		}
 		
 		//Close the scanner.
