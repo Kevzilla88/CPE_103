@@ -81,38 +81,13 @@ public class Separator
 				}
 			}
 			
-			//It's not an integer or a float.
+			//It's not an integer or a float. Therefore its invalid and reading should stop.
 			else
 			{
-				//Take it in as a string so we can analyze.
-				String inString = in.next();
-				
-				//Check if aa.
-				if (inString.equals("aa"))
-				{
-					floatCount = n;
-					intCount = n;
-				}
-				
-				//Check if q.
-				if (inString.charAt(0) == 'q')
-				{					
-					floatCount = n;
-					intCount = n;
-				}
-				
-				//Must be invalid (not "aa" or 'q').
-				else
-				{
-					floatCount = n;
-					intCount = n;
-				}
+				floatCount = n;
+				intCount = n;
 			}		
 		}
-		
-		//Close the scanner.
-		in.close();
-		
 		//Convert the integer array to a string.
 		String intString = Arrays.toString(intArray);
 		String floatString = Arrays.toString(floatArray);
