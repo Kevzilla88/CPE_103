@@ -44,7 +44,8 @@ public class AStack<T>
 		}
 		
 		//Increment top and then insert the item.
-		arr[top++] = item;
+		top++;
+		arr[top] = item;
 	}
 	
 	/**
@@ -53,23 +54,34 @@ public class AStack<T>
 	 */
 	public T pop()
 	{
-		//Check if the stack is empty.
-		if (isEmpty())
+		try
 		{
-			throw new EmptyStackException();
+			//Check if the stack is empty.
+			if (isEmpty())
+			{
+				throw new EmptyStackException();
+			}
+		}
+		
+		catch (EmptyStackException e)
+		{
+			System.out.println("Invalid operation: the stack is empty!");
 		}
 		
 		//It's not empty, so continue.
-		else
+		if (!isEmpty())
 		{
+			
 			//Get the top item.
 			T popReturn = arr[top];
 			
 			//Decrement top.
 			top--;
-			
 			return popReturn;
 		}
+		
+		//Handle empty stack case.
+		return null;
 	}
 	
 	/**
@@ -78,17 +90,28 @@ public class AStack<T>
 	 */
 	public T peek()
 	{
-		//Check if the stack is empty.
-		if (isEmpty())
+		try
 		{
-			throw new EmptyStackException();
+			//Check if the stack is empty.
+			if (isEmpty())
+			{
+				throw new EmptyStackException();
+			}
+		}
+		
+		catch (EmptyStackException e)
+		{
+			System.out.println("Invalid operation: the stack is empty!");
 		}
 		
 		//It's not empty, so continue.
-		else
+		if (!isEmpty())
 		{
 			return arr[top];
-		}		
+		}
+		
+		//Handle empty stack case.
+		return null;
 	}
 	
 	/**
