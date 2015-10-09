@@ -29,7 +29,8 @@ public class Converter {
 
          if (token.equals("(")) {
             converter.push(token);
-         } else if (token.equals(")")) {
+         }
+         else if (token.equals(")")) {
             peekNext = (String) converter.peek();
             while (!peekNext.equals("(")) {
                postfix += converter.pop() + " ";
@@ -38,22 +39,30 @@ public class Converter {
             converter.pop();
          }
          else if (token.equals("*")) {
+            while (!converter.isEmpty() && !converter.peek().equals("*")&& !converter.peek().equals("!") && !converter.peek().equals("+") && !converter.peek().equals("-") ) {
+               postfix += converter.pop() + " ";
+            }
             converter.push("*");
          }
          else if (token.equals("/")) {
+            while (!converter.isEmpty() && !converter.peek().equals("*")&& !converter.peek().equals("!") && !converter.peek().equals("+") && !converter.peek().equals("-") ) {
+               postfix += converter.pop() + " ";
+            }
             converter.push("/");
          }
          else if (token.equals("+")) {
-            while (!converter.isEmpty() && !converter.peek().equals("(")) {
+            while (!converter.isEmpty() && !converter.peek().equals("(") && !converter.peek().equals("+") && !converter.peek().equals("-")) {
                postfix += converter.pop() + " ";
             }
             converter.push("+");
-         } else if (token.equals("-")) {
-            while (!converter.isEmpty() && !converter.peek().equals("(")) {
+         }
+         else if (token.equals("-")) {
+            while (!converter.isEmpty() && !converter.peek().equals("(") && !converter.peek().equals("+") && !converter.peek().equals("-")) {
                postfix += converter.pop() + " ";
             }
             converter.push("-");
-         } else {
+         }
+         else {
             converter.push(token);
          }
 
@@ -73,40 +82,43 @@ public class Converter {
     */
    public static double postfixValue(String expression) {
       double lhs, rhs;
-      
+
       //Creates a new Stack
       MyStack stack = new MyStack();
       String[] inputs = expression.split("\\s");
- 
+
 
       for (int i = 0; i < inputs.length; i++) {
-         if (inputs[i].equals("*") || inputs[i].equals("/") || inputs[i].equals("+") || inputs[i].equals("-")) {
+         if (!(inputs[i].equals("*") || inputs[i].equals("/") || inputs[i].equals("+") || inputs[i].equals("-"))) {
+            stack.push(inputs[i]);
+         }
+      }
+      for (int j = 0; j < inputs.length; j++) {
+         if (inputs[j].equals("*") || inputs[j].equals("/") || inputs[j].equals("+") || inputs[j].equals("-")) {
             rhs = Double.valueOf((String) stack.pop());
             lhs = Double.valueOf((String) stack.pop());
-            switch (inputs[i].charAt(0)) {
-               
+            switch (inputs[j].charAt(0)) {
+
                case '*':
                   stack.push(String.valueOf(lhs * rhs));
                   break;
-               
+
                case '/':
                   stack.push(String.valueOf(lhs / rhs));
                   break;
-               
+
                case '+':
                   stack.push(String.valueOf(lhs + rhs));
                   break;
-               
+
                case '-':
                   stack.push(String.valueOf(lhs - rhs));
                   break;
             }
-
-         } else {
-            stack.push(inputs[i]);
          }
+
       }
 
-      return Double.valueOf((String)stack.pop());
+      return Double.valueOf((String) stack.pop());
    }
 }
