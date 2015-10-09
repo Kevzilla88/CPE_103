@@ -16,50 +16,44 @@ public class Converter
 	public static String infixToPostfix (String expression)
 	{
 		//Creates an empty string to hold output
-		String postfix = "";
+		String peekNext;
+		String postfix = new String();
 
 		//Creates a new stack to hold inputs
 		MyStack converter = new MyStack();
 
 		//Creates a scanner to process the input expression
 		Scanner in = new Scanner(expression);
+		
 		while (in.hasNext()){
 			String token = in.next();
 
 			if (token.equals("(")){
-				converter.push("(");
+				converter.push(token);
 				}
 			else if(token.equals(")")){
-				while (!token.equals("(")){
-					postfix= postfix+ converter.pop() + " ";
+				peekNext = (String) converter.peek();
+				while ( !peekNext.equals("("))
+				{
+					postfix+= converter.pop() + " ";
+					peekNext = (String) converter.peek();
 				}
-			}
-			else if( token.equals("^")){
-				while(!(token.equals("^")||token.equals("*")||token.equals("/")||token.equals("+")||token.equals("-"))){
-					postfix= postfix+ converter.pop() + " ";
-				}
-				converter.push("^");
+				converter.pop();
 			}
 			else if( token.equals("*")) {
-				while (!(token.equals("*") || token.equals("/") || token.equals("+") || token.equals("-"))) {
-					postfix= postfix+ converter.pop() + " ";
-				}
 				converter.push("*");
 			}
 			else if(token.equals("/")) {
-				while (!(token.equals("*") || token.equals("/") || token.equals("+") || token.equals("-"))) {
-					postfix= postfix+ converter.pop() + " ";
-				}
 				converter.push("/");
 			}
 			else if(token.equals("+")) {
-				while (!( token.equals("+") || token.equals("-"))) {
-					postfix= postfix+ converter.pop() + " ";
+				while(!converter.isEmpty() && !converter.peek().equals("(")) {
+					postfix += converter.pop() + " ";
 				}
 				converter.push("+");
 			}
 			else if(token.equals("-")) {
-				while (token.equals("+") || token.equals("-")) {
+				while (converter.peek().equals("+") || converter.peek().equals("-")) {
 					postfix= postfix + converter.pop() + " ";
 				}
 				converter.push("/");
@@ -98,27 +92,27 @@ public class Converter
 			else if (token.equals("^")){
 				rhs= Double.parseDouble((String)calculator.pop());
 				lhs = Double.parseDouble((String)calculator.pop());
-				calculator.push(Math.pow(lhs,rhs));
+				calculator.push(String.valueOf(Math.pow(lhs,rhs)));
 			}
 			else if (token.equals("*")){
 				rhs= Double.parseDouble((String)calculator.pop());
 				lhs = Double.parseDouble((String)calculator.pop());
-				calculator.push(lhs*rhs);
+				calculator.push(String.valueOf(lhs*rhs));
 			}
 			else if (token.equals("/")){
 				rhs= Double.parseDouble((String)calculator.pop());
 				lhs = Double.parseDouble((String)calculator.pop());
-				calculator.push(lhs/rhs);
+				calculator.push(String.valueOf(lhs/rhs));
 			}
 			else if (token.equals("+")){
 				rhs= Double.parseDouble((String)calculator.pop());
 				lhs = Double.parseDouble((String)calculator.pop());
-				calculator.push(lhs+rhs);
+				calculator.push(String.valueOf(lhs+rhs));
 			}
 			else if (token.equals("-")){
 				rhs= Double.parseDouble((String)calculator.pop());
 				lhs = Double.parseDouble((String)calculator.pop());
-				calculator.push(lhs-rhs);
+				calculator.push(String.valueOf(lhs-rhs));
 			}
 		}
 		return(Double.parseDouble((String)calculator.pop()));
